@@ -7,22 +7,28 @@ public class FileWriter01 {
         /* flush() força o conteudo do buffer a ser escrito no disco
          append serve para não subistituir o conteudo ja existente no arquivo  */
         File file = new File("arquivo.txt");
-
         try {
-            if (!file.exists()) {
-                //cria um arquivo (vazio)
-                file.createNewFile();
-            }
+            //verifica se o arquivo ou diretorio existe
+            boolean existe = file.exists();
+            //cria um arquivo (vazio)
+            file.createNewFile();
+
+            //cria um diretorio
+            file.mkdir();
 
             //caso seja um diretorio, é possivel listar seus arquivos e diretorios
             File[] files = file.listFiles();
+            System.out.println(files);
 
-            //escrever no arquivo
+            //escrever no arquivo. Append serve para não subistituir o conteudo ja existente no arquivo
             FileWriter fw = new FileWriter(file, true);
 
             BufferedWriter bw = new BufferedWriter(fw);
 
-            fw.write("Dev Dojoo\nCurso Java\nMaratona");
+            fw.write("Dev Dojoo - Maratona Java");
+            bw.newLine();
+            //flush() força o conteudo do buffer a ser escrito no disco
+            bw.flush();
             bw.close();
             fw.close();
 
@@ -30,9 +36,9 @@ public class FileWriter01 {
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
 
-            //Enquanto ouver mais linhas, ele faz a leitura com o buffered
-            while (br.ready()) {
-                String linha = br.readLine();
+            //Enquanto houver mais linhas, ele faz a leitura com o buffered
+            String linha;
+            while ((linha = br.readLine()) != null) {
                 System.out.println(linha);
             }
             br.close();
